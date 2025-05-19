@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Цифровой калькулятор</title>
+  <link rel="stylesheet" href="calculator-style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+  <h1>Калькулятор</h1>
+
+  <div class="center-wrapper">
+    <div class="calculator">
+      <div class="screen" id="screen">0</div>
+      <div class="buttons">
+        <button class="btn" onclick="clearScreen()">C</button>
+        <button class="btn" onclick="deleteLast()">⌫</button>
+        <button class="btn operator" onclick="inputValue('/')">÷</button>
+        <button class="btn operator" onclick="inputValue('*')">×</button>
+
+        <button class="btn" onclick="inputValue('7')">7</button>
+        <button class="btn" onclick="inputValue('8')">8</button>
+        <button class="btn" onclick="inputValue('9')">9</button>
+        <button class="btn operator" onclick="inputValue('-')">−</button>
+
+        <button class="btn" onclick="inputValue('4')">4</button>
+        <button class="btn" onclick="inputValue('5')">5</button>
+        <button class="btn" onclick="inputValue('6')">6</button>
+        <button class="btn operator" onclick="inputValue('+')">+</button>
+
+        <button class="btn" onclick="inputValue('1')">1</button>
+        <button class="btn" onclick="inputValue('2')">2</button>
+        <button class="btn" onclick="inputValue('3')">3</button>
+        <button class="btn operator" onclick="calculate()">=</button>
+
+        <button class="btn zero" onclick="inputValue('0')">0</button>
+        <button class="btn" onclick="inputValue('.')">.</button>
+      </div>
+    </div>
+  </div>
+
+  <a href="../portfolio.html" class="back">← Вернуться в портфолио</a>
+
+  <script src="script.js"></script>
+</body>
+</html>

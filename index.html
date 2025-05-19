@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Виктор Ткаченко — HTML/CSS-верстальщик</title>
+  
+  <!-- Подключаем правильный CSS -->
+  <link rel="stylesheet" href="portfolio-style.css">
+
+  <!-- Шрифты и иконки -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="wrapper">
+
+    <header class="hero">
+      <h1>Виктор Ткаченко</h1>
+      <p>HTML / CSS-верстальщик</p>
+      <a href="#projects" class="button">Посмотреть проекты</a>
+    </header>
+
+    <section id="about" class="section">
+      <h2>Обо мне</h2>
+      <p>Учусь верстать сайты с нуля. Работаю с HTML, CSS, создаю адаптивные страницы по макетам. Осваиваю JavaScript и двигаюсь к позиции Junior.</p>
+
+      <div class="skills">
+        <div class="skill">
+          <i class="fab fa-html5"></i>
+          <p>HTML5</p>
+        </div>
+        <div class="skill">
+          <i class="fab fa-css3-alt"></i>
+          <p>CSS3</p>
+        </div>
+        <div class="skill">
+          <i class="fab fa-js"></i>
+          <p>JavaScript</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <h2>Мои проекты</h2>
+      <ul>
+        <li>
+         <a href="calculator/calculator.html" target="_blank">Калькулятор на JavaScript</a>
+        </li>
+        <li>Лендинг автосалона (интенсив)</li>
+        <li>Одностраничный сайт из Figma</li>
+      </ul>
+    </section>
+
+    <section id="contacts" class="section">
+      <h2>Контакты</h2>
+      <p>Telegram: @vash_nik</p>
+      <p>Email: vash@email.ru</p>
+    </section>
+
+    <footer class="footer">
+      <p>© 2025 Виктор Ткаченко</p>
+      <p>
+        <a href="https://t.me/vash_nik" target="_blank" class="footer-link">
+          <i class="fab fa-telegram"></i> Написать в Telegram
+        </a>
+      </p>
+    </footer>
+  </div>
+
+  <!-- Кнопка прокрутки вверх -->
+  <a href="#" class="scroll-to-top" title="Наверх">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+</body>
+</html>

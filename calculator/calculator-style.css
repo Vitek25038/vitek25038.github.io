@@ -1,0 +1,162 @@
+body {
+  background-color: #1f1f1f;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  padding: 60px 20px;
+}
+
+h1 {
+  color: #F8FF23;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.calculator {
+  background-color: #2a2a2a;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.screen {
+  background-color: #000;
+  color: #F8FF23;
+  font-size: 32px;
+  text-align: right;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  height: 60px;
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.btn {
+  padding: 20px;
+  font-size: 20px;
+  background-color: #1f1f1f;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #333;
+}
+
+.btn.operator {
+  background-color: #F8FF23;
+  color: #000;
+}
+
+.btn.operator:hover {
+  background-color: #A8AE16;
+}
+
+.btn.zero {
+  grid-column: span 2;
+}
+
+a.back {
+  margin-top: 40px;
+  color: #F8FF23;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+}
+
+a.back:hover {
+  color: #A8AE16;
+}
+
+/* Центрирование */
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+/* Светлая тема */
+body.light {
+  background-color: #f4f4f4;
+  color: #000;
+}
+
+body.light .calculator {
+  background-color: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+body.light .screen {
+  background-color: #eee;
+  color: #000;
+}
+
+body.light .btn {
+  background-color: #ddd;
+  color: #000;
+}
+
+body.light .btn:hover {
+  background-color: #bbb;
+}
+
+body.light .btn.operator {
+  background-color: #ffc107;
+  color: #000;
+}
+
+body.light .btn.operator:hover {
+  background-color: #e0a800;
+}
+
+body.light a.back {
+  color: #000;
+}
+
+body.light a.back:hover {
+  color: #444;
+}
+
+/* Кнопка переключения темы */
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #F8FF23;
+  color: #000;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+body.light .theme-toggle {
+  background-color: #444;
+  color: #fff;
+}
+
+body.light h1 {
+  color: #000;
+}
+
+body.light a.back {
+  color: #333;
+}
+
+body.light a.back:hover {
+  color: #666;
+}
