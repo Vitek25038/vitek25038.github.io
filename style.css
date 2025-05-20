@@ -1,149 +1,128 @@
-html, body {
-  height: 100%;
+/* === Базовая настройка === */
+* {
   margin: 0;
-  scroll-behavior: smooth;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body {
+html, body {
+  height: 100%;
   font-family: 'Montserrat', sans-serif;
   background-color: #1f1f1f;
   color: #fff;
-  line-height: 1.6;
+  scroll-behavior: smooth;
 }
 
+/* === Обёртка и заголовки === */
 .wrapper {
-  min-height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-h1, h2 {
-  margin-bottom: 0.5em;
+  min-height: 100%;
+  padding-bottom: 40px;
 }
 
 h1 {
   font-size: 48px;
   font-weight: 700;
+  margin-bottom: 0.3em;
+  text-align: center;
 }
 
 h2 {
   font-size: 32px;
   font-weight: 600;
   margin-bottom: 20px;
-  border-bottom: 2px solid #f8ff23;
+  border-bottom: 2px solid #F8FF23;
   display: inline-block;
 }
 
+/* === Шапка === */
 .hero {
   text-align: center;
   padding: 100px 20px;
   background: linear-gradient(135deg, #1f1f1f, #2c2c2c);
-  background-size: cover;
-  background-position: center;
-  animation: fadeIn 1s ease-in-out;
 }
 
+/* === Кнопка-приглашение === */
 .button {
   display: inline-block;
   margin-top: 20px;
   padding: 12px 24px;
   background-color: #F8FF23;
   color: #000;
-  text-decoration: none;
   font-weight: bold;
+  text-decoration: none;
   border-radius: 5px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+  transition: 0.3s ease;
 }
-
 .button:hover {
   background-color: #A8AE16;
-  color: #000000;
   transform: scale(1.05);
 }
 
+/* === Секции === */
 .section {
-  padding: 80px 40px;
+  padding: 80px 20px;
   max-width: 800px;
   margin: 0 auto;
-  border-radius: 10px;
-  animation: fadeIn 0.8s ease-in-out;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease;
+}
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.section:not(:first-child) {
-  margin-top: 40px;
-}
-
-#about {
-  background: linear-gradient(135deg, #4169E1, #00008B);
-}
-
-#projects {
-  background: linear-gradient(135deg, #708090, #778899);
-}
-
-#contacts {
-  background: linear-gradient(135deg, #191970, #000080);
-}
-
+/* === Список проектов === */
 ul {
   list-style: none;
   padding: 0;
 }
-
 ul li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
+/* === Навыки === */
 .skills {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 40px;
   margin-top: 40px;
 }
-
 .skill {
   text-align: center;
 }
-
 .skill i {
   font-size: 48px;
   color: #F8FF23;
-  margin-bottom: 10px;
   transition: transform 0.3s ease;
 }
-
 .skill i:hover {
   transform: scale(1.2);
 }
 
+/* === Контакты и футер === */
 .footer {
-  background-color: #111;
-  color: #aaa;
-  text-align: center;
-  padding: 30px 20px 60px;
-  font-size: 14px;
   margin-top: auto;
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 14px;
+  background-color: #111;
   border-top: 1px solid #333;
+  color: #aaa;
 }
-
 .footer-link {
   color: #F8FF23;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
 }
-
-.footer-link i {
-  margin-right: 8px;
-  color: #F8FF23;
-  transition: color 0.3s ease;
-}
-
 .footer-link:hover {
   color: #A8AE16;
 }
 
+/* === Кнопка вверх === */
 .scroll-to-top {
   position: fixed;
   bottom: 30px;
@@ -153,36 +132,49 @@ ul li {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   text-decoration: none;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: 0.3s ease;
   z-index: 999;
 }
-
 .scroll-to-top:hover {
   background-color: #A8AE16;
   transform: scale(1.1);
 }
 
-a {
-  transition: color 0.3s ease, background-color 0.3s ease;
+/* === Предпросмотр проекта === */
+.project-preview {
+  position: absolute;
+  display: none;
+  background: #2b2b2b;
+  color: #f0f0f0;
+  padding: 12px;
+  width: 260px;
+  border: 1px solid #444;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  transition: opacity 0.2s ease;
 }
-
-a:hover {
-  color: #f8ff23;
+.project-preview img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 10px;
 }
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.project-preview h4 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #F8FF23;
+}
+.project-preview p {
+  margin: 0;
+  font-size: 14px;
+  color: #ccc;
 }

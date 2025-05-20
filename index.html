@@ -4,11 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Виктор Ткаченко — HTML/CSS-верстальщик</title>
-  
-  <!-- Подключаем правильный CSS -->
-  <link rel="stylesheet" href="portfolio-style.css">
 
-  <!-- Шрифты и иконки -->
+  <!-- Стили -->
+  <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -17,7 +15,7 @@
 
     <header class="hero">
       <h1>Виктор Ткаченко</h1>
-      <p>HTML / CSS-верстальщик</p>
+      <p id="typing-text"></p>
       <a href="#projects" class="button">Посмотреть проекты</a>
     </header>
 
@@ -26,18 +24,9 @@
       <p>Учусь верстать сайты с нуля. Работаю с HTML, CSS, создаю адаптивные страницы по макетам. Осваиваю JavaScript и двигаюсь к позиции Junior.</p>
 
       <div class="skills">
-        <div class="skill">
-          <i class="fab fa-html5"></i>
-          <p>HTML5</p>
-        </div>
-        <div class="skill">
-          <i class="fab fa-css3-alt"></i>
-          <p>CSS3</p>
-        </div>
-        <div class="skill">
-          <i class="fab fa-js"></i>
-          <p>JavaScript</p>
-        </div>
+        <div class="skill"><i class="fab fa-html5"></i><p>HTML5</p></div>
+        <div class="skill"><i class="fab fa-css3-alt"></i><p>CSS3</p></div>
+        <div class="skill"><i class="fab fa-js"></i><p>JavaScript</p></div>
       </div>
     </section>
 
@@ -45,7 +34,14 @@
       <h2>Мои проекты</h2>
       <ul>
         <li>
-         <a href="calculator/calculator.html" target="_blank">Калькулятор на JavaScript</a>
+          <a href="calculator/calculator.html"
+             target="_blank"
+             class="project-link"
+             data-title="Калькулятор"
+             data-desc="Простой JS-калькулятор с базовыми функциями"
+             data-img="images/calculator-preview.png">
+             Калькулятор на JavaScript
+          </a>
         </li>
         <li>Лендинг автосалона (интенсив)</li>
         <li>Одностраничный сайт из Figma</li>
@@ -68,9 +64,15 @@
     </footer>
   </div>
 
-  <!-- Кнопка прокрутки вверх -->
+  <!-- Кнопка вверх -->
   <a href="#" class="scroll-to-top" title="Наверх">
     <i class="fas fa-arrow-up"></i>
   </a>
+
+  <!-- Блок предпросмотра -->
+  <div class="project-preview" id="projectPreview"></div>
+
+  <!-- Скрипт -->
+  <script src="main.js"></script>
 </body>
 </html>
