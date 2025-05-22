@@ -1,0 +1,123 @@
+/* Фоновое видео */
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.3;
+    filter: brightness(0.6);
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Переключатель темы */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.calculator-container {
+    max-width: 400px;
+    margin: 100px auto 40px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+/* Экран */
+.screen {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    font-size: 1.8rem;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: right;
+    overflow-x: auto;
+}
+
+/* Кнопки */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.btn {
+    padding: 20px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.operator {
+    background-color: #ff9f1c;
+}
+
+.operator:hover {
+    background-color: #ffa733;
+}
+
+.zero {
+    grid-column: span 2;
+}
+
+/* Кнопка "Назад" */
+.back-btn {
+    display: inline-block;
+    margin-top: 25px;
+    color: #fff;
+    background-color: #444;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #666;
+}
+
+.history {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: right;
+    color: #ccc;
+}
+
+.history p {
+    margin: 4px 0;
+}

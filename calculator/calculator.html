@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Цифровой калькулятор</title>
-  <link rel="stylesheet" href="calculator-style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <title>Калькулятор</title>
+    <link rel="stylesheet" href="calculator.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
 </head>
+
 <body>
-  <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="../media/background.mp4" type="video/mp4" />
+    </video>
 
-  <h1>Калькулятор</h1>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
 
-  <div class="center-wrapper">
-    <div class="calculator">
-      <div class="screen" id="screen">0</div>
-      <div class="buttons">
-        <button class="btn" onclick="clearScreen()">C</button>
-        <button class="btn" onclick="deleteLast()">⌫</button>
-        <button class="btn operator" onclick="inputValue('/')">÷</button>
-        <button class="btn operator" onclick="inputValue('*')">×</button>
+    <div class="calculator-container">
+        <h1>🧮 Калькулятор</h1>
+        <div class="calculator">
+            <div id="screen" class="screen">0</div>
+            <div id="history" class="history"></div>
+            <div class="buttons">
+                <!-- 1-я строка -->
+                <button class="btn" onclick="deleteLast()">⌫</button>
+                <button class="btn" onclick="clearScreen()">C</button>
+                <button class="btn" onclick="insertPi()">π</button>
+                <button class="btn operator" onclick="inputValue('+')">+</button>
 
-        <button class="btn" onclick="inputValue('7')">7</button>
-        <button class="btn" onclick="inputValue('8')">8</button>
-        <button class="btn" onclick="inputValue('9')">9</button>
-        <button class="btn operator" onclick="inputValue('-')">−</button>
+                <!-- 2-я строка -->
+                <button class="btn" onclick="insertSqrt()">√</button>
+                <button class="btn" onclick="insertPercent()">%</button>
+                <button class="btn" onclick="insertRand()">rand</button>
+                <button class="btn operator" onclick="inputValue('/')">÷</button>
 
-        <button class="btn" onclick="inputValue('4')">4</button>
-        <button class="btn" onclick="inputValue('5')">5</button>
-        <button class="btn" onclick="inputValue('6')">6</button>
-        <button class="btn operator" onclick="inputValue('+')">+</button>
+                <!-- 3-я строка -->
+                <button class="btn" onclick="inputValue('7')">7</button>
+                <button class="btn" onclick="inputValue('8')">8</button>
+                <button class="btn" onclick="inputValue('9')">9</button>
+                <button class="btn operator" onclick="inputValue('*')">×</button>
 
-        <button class="btn" onclick="inputValue('1')">1</button>
-        <button class="btn" onclick="inputValue('2')">2</button>
-        <button class="btn" onclick="inputValue('3')">3</button>
-        <button class="btn operator" onclick="calculate()">=</button>
+                <!-- 4-я строка -->
+                <button class="btn" onclick="inputValue('4')">4</button>
+                <button class="btn" onclick="inputValue('5')">5</button>
+                <button class="btn" onclick="inputValue('6')">6</button>
+                <button class="btn operator" onclick="inputValue('-')">−</button>
 
-        <button class="btn zero" onclick="inputValue('0')">0</button>
-        <button class="btn" onclick="inputValue('.')">.</button>
-      </div>
+                <!-- 5-я строка -->
+                <button class="btn" onclick="inputValue('1')">1</button>
+                <button class="btn" onclick="inputValue('2')">2</button>
+                <button class="btn" onclick="inputValue('3')">3</button>
+                <button class="btn operator" onclick="calculate()">=</button>
+
+                <!-- 6-я строка -->
+                <button class="btn zero" onclick="inputValue('0')">0</button>
+                <button class="btn" onclick="inputValue('.')">.</button>
+
+            </div>
+        </div>
+        <a href="../index.html" class="back-btn">← Назад</a>
     </div>
-  </div>
 
-  <a href="../portfolio.html" class="back">← Вернуться в портфолио</a>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

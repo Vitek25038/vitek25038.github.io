@@ -1,38 +1,77 @@
-let screen = document.getElementById('screen');
-
-function inputValue(value) {
-  if (screen.textContent === '0' || screen.textContent === 'Деление на 0!') {
-    screen.textContent = value;
-  } else {
-    screen.textContent += value;
-  }
+function inputValue(val) {
+    const screen = document.getElementById("screen");
+    if (screen.innerText === "0") {
+        screen.innerText = val;
+    } else {
+        screen.innerText += val;
+    }
 }
 
 function clearScreen() {
-  screen.textContent = '0';
+    document.getElementById("screen").innerText = "0";
+    document.getElementById("history").innerHTML = ""; // очистка истории
 }
 
 function deleteLast() {
-  let current = screen.textContent;
-  screen.textContent = current.length > 1 ? current.slice(0, -1) : '0';
+    const screen = document.getElementById("screen");
+    screen.innerText = screen.innerText.slice(0, -1) || "0";
 }
 
 function calculate() {
-  try {
-    let result = eval(screen.textContent);
-    if (result === Infinity || result === -Infinity) {
-      screen.textContent = 'Деление на 0!';
-    } else {
-      screen.textContent = +parseFloat(result.toFixed(6));
+    const screen = document.getElementById("screen");
+    const history = document.getElementById("history");
+
+    let expression = normalize(screen.innerText);
+
+    try {
+        const result = eval(expression);
+        screen.innerText = result;
+
+        const item = document.createElement("p");
+        item.textContent = `${expression} = ${result}`;
+        history.prepend(item);
+    } catch {
+        screen.innerText = "Ошибка";
     }
-  } catch {
-    screen.textContent = 'Ошибка';
-  }
 }
 
 function toggleTheme() {
-  const body = document.body;
-  const btn = document.querySelector('.theme-toggle');
-  body.classList.toggle('light');
-  btn.textContent = body.classList.contains('light') ? '☀️' : '🌙';
+    document.body.classList.toggle("dark");
+}
+
+// 🔹 Доп. функции
+function insertPi() {
+    inputValue(Math.PI.toFixed(8));
+}
+
+function insertSqrt() {
+    const screen = document.getElementById("screen");
+    try {
+        const value = eval(normalize(screen.innerText));
+        screen.innerText = Math.sqrt(value).toFixed(8);
+    } catch {
+        screen.innerText = "Ошибка";
+    }
+}
+
+function insertPercent() {
+    const screen = document.getElementById("screen");
+    try {
+        const value = eval(normalize(screen.innerText));
+        screen.innerText = (value / 100).toFixed(8);
+    } catch {
+        screen.innerText = "Ошибка";
+    }
+}
+
+function insertRand() {
+    inputValue(Math.random().toFixed(8));
+}
+
+// 🔹 Заменяем визуальные символы на валидные операторы
+function normalize(expr) {
+    return expr
+        .replace(/×/g, '*')
+        .replace(/÷/g, '/')
+        .replace(/−/g, '-');
 }
