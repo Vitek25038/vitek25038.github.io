@@ -35,6 +35,15 @@ function calculate() {
     }
 }
 
+function negate() {
+    const screen = document.getElementById("screen");
+    const val = parseFloat(screen.innerText);
+    if (!isNaN(val)) {
+        screen.innerText = (-val).toString();
+    }
+}
+
+
 function toggleTheme() {
     document.body.classList.toggle("light");
     const isLight = document.body.classList.contains("light");
