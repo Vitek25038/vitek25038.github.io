@@ -21,6 +21,14 @@ body {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 8px;
+    fill: currentColor;
+}
+
 /* ===== Шапка, карточка, футер ===== */
 header,
 .project,
@@ -52,8 +60,29 @@ header p {
     font-size: 1.2rem;
 }
 
-.skills span {
-    padding: 0 6px;
+.icon-skill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 10px;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.icon-skill img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    aspect-ratio: 1;
+    vertical-align: middle;
+    filter: brightness(1.4);
+    opacity: 0.85;
+    transition: transform 0.3s ease;
+}
+
+.icon-skill img:hover {
+    transform: scale(1.15);
+    opacity: 1;
 }
 
 /* ===== Проекты ===== */
@@ -99,6 +128,7 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* ===== Анимация ===== */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -108,5 +138,30 @@ footer {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* ===== Адаптив: SVG-навыки и иконки ===== */
+@media (max-width: 480px) {
+    .skills p {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .icon-skill {
+        margin: 4px 6px;
+        font-size: 1rem;
+    }
+
+    .icon-skill img {
+        max-width: 18px;
+        max-height: 18px;
+    }
+
+    .icon {
+        width: 20px;
+        height: 20px;
     }
 }
