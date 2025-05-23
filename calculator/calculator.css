@@ -121,3 +121,45 @@ h1 {
 .history p {
     margin: 4px 0;
 }
+
+body.light {
+    background-color: #f2f2f2;
+    color: #111;
+}
+
+body.light .calculator-container,
+body.light .screen,
+body.light .history,
+body.light .btn,
+body.light .back-btn {
+    background-color: rgba(0, 0, 0, 0.04);
+    color: #111;
+}
+
+body.light .btn.operator {
+    background-color: #ffb347;
+}
+
+body.light .btn.operator:hover {
+    background-color: #ffc066;
+}
+
+body.light .back-btn {
+    background-color: #ccc;
+}
+
+body.light .back-btn:hover {
+    background-color: #bbb;
+}
+
+.theme-toggle:hover {
+    transform: rotate(20deg);
+}
+
+.btn {
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}

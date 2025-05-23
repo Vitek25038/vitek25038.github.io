@@ -75,3 +75,28 @@ function normalize(expr) {
         .replace(/÷/g, '/')
         .replace(/−/g, '-');
 }
+
+function toggleTheme() {
+    document.body.classList.toggle("light");
+    const isLight = document.body.classList.contains("light");
+    localStorage.setItem("theme", isLight ? "light" : "dark");
+}
+
+function applySavedTheme() {
+    const theme = localStorage.getItem("theme");
+    if (theme === "light") {
+        document.body.classList.add("light");
+    }
+}
+applySavedTheme();
+
+// Анимация нажатия кнопок
+const allButtons = document.querySelectorAll(".btn");
+allButtons.forEach(btn => {
+    btn.addEventListener("mousedown", () => {
+        btn.style.transform = "scale(0.95)";
+    });
+    btn.addEventListener("mouseup", () => {
+        btn.style.transform = "scale(1)";
+    });
+});
