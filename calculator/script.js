@@ -9,7 +9,7 @@ function inputValue(val) {
 
 function clearScreen() {
     document.getElementById("screen").innerText = "0";
-    document.getElementById("history").innerHTML = ""; // очистка истории
+    document.getElementById("history").innerHTML = "";
 }
 
 function deleteLast() {
@@ -36,10 +36,11 @@ function calculate() {
 }
 
 function toggleTheme() {
-    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+    const isLight = document.body.classList.contains("light");
+    localStorage.setItem("theme", isLight ? "light" : "dark");
 }
 
-// 🔹 Доп. функции
 function insertPi() {
     inputValue(Math.PI.toFixed(8));
 }
@@ -68,7 +69,6 @@ function insertRand() {
     inputValue(Math.random().toFixed(8));
 }
 
-// 🔹 Заменяем визуальные символы на валидные операторы
 function normalize(expr) {
     return expr
         .replace(/×/g, '*')
@@ -76,27 +76,21 @@ function normalize(expr) {
         .replace(/−/g, '-');
 }
 
-function toggleTheme() {
-    document.body.classList.toggle("light");
-    const isLight = document.body.classList.contains("light");
-    localStorage.setItem("theme", isLight ? "light" : "dark");
-}
-
-function applySavedTheme() {
+// Вызовем, когда DOM загрузится
+document.addEventListener("DOMContentLoaded", () => {
     const theme = localStorage.getItem("theme");
     if (theme === "light") {
         document.body.classList.add("light");
     }
-}
-applySavedTheme();
 
-// Анимация нажатия кнопок
-const allButtons = document.querySelectorAll(".btn");
-allButtons.forEach(btn => {
-    btn.addEventListener("mousedown", () => {
-        btn.style.transform = "scale(0.95)";
-    });
-    btn.addEventListener("mouseup", () => {
-        btn.style.transform = "scale(1)";
+    // Анимация нажатия кнопок
+    const allButtons = document.querySelectorAll(".btn");
+    allButtons.forEach(btn => {
+        btn.addEventListener("mousedown", () => {
+            btn.style.transform = "scale(0.95)";
+        });
+        btn.addEventListener("mouseup", () => {
+            btn.style.transform = "scale(1)";
+        });
     });
 });
