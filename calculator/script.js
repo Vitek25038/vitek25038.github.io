@@ -94,3 +94,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+document.addEventListener("keydown", (e) => {
+    const key = e.key;
+
+    if (!isNaN(key) || "+-*/.".includes(key)) {
+        inputValue(key);
+    } else if (key === "Enter" || key === "=") {
+        calculate();
+    } else if (key === "Backspace") {
+        deleteLast();
+    } else if (key === "Escape") {
+        clearScreen();
+    }
+});
