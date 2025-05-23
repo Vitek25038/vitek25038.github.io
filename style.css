@@ -165,3 +165,35 @@ footer {
         height: 20px;
     }
 }
+
+.project:last-of-type {
+    background-color: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    margin: 40px auto;
+    padding: 30px;
+    color: #fff;
+    max-width: 800px;
+}
+
+.project:last-of-type a {
+    color: #fff;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.project:last-of-type a:hover {
+    color: #ffd700;
+}
+
+.project:last-of-type a {
+    color: #ccc;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.project:last-of-type a:hover {
+    color: #ffd700;
+    border-color: #ffd700;
+}
