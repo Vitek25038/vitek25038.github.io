@@ -9,9 +9,22 @@
     <link rel="icon" href="favicon.png" type="image/png" />
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        canvas.matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+    </style>
 </head>
 
 <body>
+    <canvas class="matrix"></canvas>
     <video autoplay muted loop playsinline class="bg-video" aria-hidden="true" role="presentation">
         <source src="media/background.mp4" type="video/mp4" />
         Ваш браузер не поддерживает видео.
@@ -55,53 +68,11 @@
 
     <section class="skills" aria-label="Навыки">
         <p>
-            <span class="icon-skill">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="20" height="20">
-                    <path fill="#E44D26" d="M19.188 114.58L8.16 0h111.68l-11.032 114.576L63.8 128" />
-                    <path fill="#F16529" d="M64 117.128l37.616-10.432 9.432-105.656H64" />
-                    <path fill="#EBEBEB"
-                        d="M64 52.272h-19.84l-1.392-15.44H64V21.792H32.928l.352 4.032 3.6 40.368H64zm0 39.232l-.064.016-16.656-4.496-1.056-11.792H31.52l2.08 23.28 30.336 8.432.064-.016z" />
-                    <path fill="#FFF"
-                        d="M63.904 52.272V36.832h18.464l1.392-15.04H63.904V21.792h31.12l-.368 4.048-3.6 40.368H63.904zm0 39.232v15.2l16.752-4.512 2.128-23.6h-18.88z" />
-                </svg>
-                HTML
-            </span> •
-            <span class="icon-skill">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="20" height="20">
-                    <path fill="#1572B6" d="M19.25 114.57L8.18 0h111.64l-11.07 114.57L63.8 128" />
-                    <path fill="#33A9DC" d="M64 117.18l37.47-10.41 9.43-105.59H64" />
-                    <path fill="#fff"
-                        d="M64 52.24h-19.8l-1.39-15.42H64V21.78H32.91l.35 4.03 3.59 40.34H64zm0 39.26l-.07.02-16.65-4.48-1.05-11.77H31.51l2.08 23.26 30.33 8.43.08-.02z" />
-                    <path fill="#EBEBEB"
-                        d="M63.91 52.24V36.82h18.46l1.39-15.04H63.91V21.78h31.13l-.37 4.05-3.6 40.34H63.91zm0 39.26v15.2l16.75-4.5 2.13-23.58H63.91z" />
-                </svg>
-                CSS
-            </span> •
-            <span class="icon-skill">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="20" height="20">
-                    <path fill="#F0DB4F" d="M1.408 1.408h125.184v125.185H1.408z" />
-                    <path
-                        d="M67.806 107.99c3.698 6.046 8.496 10.504 17.034 10.504 7.157 0 11.741-3.58 11.741-8.536 0-5.934-4.706-8.048-12.654-11.524l-4.35-1.86c-12.57-5.35-20.926-12.078-20.926-26.308 0-13.102 9.97-23.083 25.554-23.083 11.084 0 19.06 3.866 24.787 14.006l-13.56 8.724c-2.985-5.35-6.213-7.442-11.227-7.442-5.114 0-8.366 3.252-8.366 7.442 0 5.21 3.252 7.323 10.764 10.504l4.35 1.86c14.82 6.348 23.176 12.946 23.176 27.782 0 15.926-12.512 24.616-29.302 24.616-16.412 0-26.98-7.848-32.09-18.05z" />
-                </svg>
-                JS
-            </span> •
-            <span class="icon-skill">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="20" height="20">
-                    <path fill="#F1502F" d="M2.01 2.01h123.98v123.98H2.01z" />
-                    <path fill="#fff"
-                        d="M21.68 54.59h22.84v10.35H34.98v6.9h9.1v10.1h-9.1v11.98H21.68zm24.78 0h13.58l6.1 19.72h.13l5.88-19.72h13.4v39.34H84.5V66.5h-.13l-7.48 23.43h-9.54L60.15 66.5h-.13v27.43H46.46zM94.7 54.59h22.84v10.35h-9.54v6.9h9.1v10.1h-9.1v11.98H94.7z" />
-                </svg>
-                Git
-            </span> •
-            <span class="icon-skill">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="20" height="20">
-                    <path fill="#1ABCFE"
-                        d="M127.7 0C95.8 0 70.3 25.4 70.3 57.3s25.5 57.3 57.3 57.3 57.3-25.4 57.3-57.3S159.5 0 127.7 0Z" />
-                    <path fill="#0ACF83"
-                        d="M70.3 127.7c0-31.9 25.5-57.3 57.3-57.3s57.3 25.4 57.3 57.3c0 31.9-25.5 57.3-57.3 57.3S70.3 159.6 70.3 127.7Z" />
-                </svg>
-                Figma
-            </span>
+            <span class="icon-skill">HTML</span> •
+            <span class="icon-skill">CSS</span> •
+            <span class="icon-skill">JS</span> •
+            <span class="icon-skill">Git</span> •
+            <span class="icon-skill">Figma</span>
         </p>
     </section>
 
@@ -122,6 +93,49 @@
     <footer>
         <p>© 2025 Виктор | <a href="https://github.com/Vitek25038" target="_blank">GitHub</a></p>
     </footer>
+
+    <script>
+        const canvas = document.querySelector('.matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = "アカサタナハマヤラワンイキシチニヒミリウクスツヌフムユルエケセテネヘメレオコソトノホモヨロヲ";
+        const latin = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const nums = "0123456789";
+        const alphabet = (katakana + latin + nums).split("");
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array.from({ length: columns }).fill(1);
+
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#0F0";
+            ctx.font = fontSize + "px monospace";
+
+            drops.forEach((y, i) => {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                const x = i * fontSize;
+                ctx.fillText(text, x, y * fontSize);
+
+                if (y * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                drops[i]++;
+            });
+        }
+
+        setInterval(draw, 50);
+
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 </body>
 
 </html>
