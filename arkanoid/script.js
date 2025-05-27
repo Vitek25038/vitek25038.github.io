@@ -1,4 +1,4 @@
-// Arkanoid v1.5 — с бонусами разного типа и мультиболом
+// Arkanoid v1.6 — адаптация под мобильные
 
 let isRunning = false;
 let isPaused = false;
@@ -7,11 +7,18 @@ let animationId;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+// Адаптивный размер канваса
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight * 0.7;
+
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 
-let paddleWidth = 75;
-const paddleHeight = 10;
+// Масштаб от базовой ширины (480px)
+const scale = canvasWidth / 480;
+
+let paddleWidth = 75 * scale;
+const paddleHeight = 10 * scale;
 let paddleX = (canvasWidth - paddleWidth) / 2;
 
 let score = 0;
@@ -22,21 +29,21 @@ let rightPressed = false;
 let leftPressed = false;
 
 let balls = [
-    { x: canvasWidth / 2, y: canvasHeight - 30, dx: 2, dy: -2, radius: 8 }
+    { x: canvasWidth / 2, y: canvasHeight - 30, dx: 2 * scale, dy: -2 * scale, radius: 8 * scale }
 ];
 
 let powerUps = [];
-const powerUpWidth = 20;
-const powerUpHeight = 20;
+const powerUpWidth = 20 * scale;
+const powerUpHeight = 20 * scale;
 const powerUpChance = 0.3;
 
 const blockRowCount = 5;
 const blockColumnCount = 7;
-const blockWidth = 55;
-const blockHeight = 20;
-const blockPadding = 10;
-const blockOffsetTop = 30;
-const blockOffsetLeft = 35;
+const blockWidth = 55 * scale;
+const blockHeight = 20 * scale;
+const blockPadding = 10 * scale;
+const blockOffsetTop = 30 * scale;
+const blockOffsetLeft = 35 * scale;
 let blocks = [];
 
 for (let c = 0; c < blockColumnCount; c++) {
@@ -52,6 +59,12 @@ canvas.addEventListener("mousemove", (e) => {
     paddleX = mouseX - paddleWidth / 2;
 });
 
+canvas.addEventListener("touchmove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const touchX = e.touches[0].clientX - rect.left;
+    paddleX = touchX - paddleWidth / 2;
+});
+
 document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight") rightPressed = true;
     else if (e.key === "ArrowLeft") leftPressed = true;
@@ -64,14 +77,14 @@ document.addEventListener("keyup", (e) => {
 
 function drawPaddle() {
     ctx.fillStyle = '#00ffff';
-    ctx.fillRect(paddleX, canvasHeight - paddleHeight - 10, paddleWidth, paddleHeight);
+    ctx.fillRect(paddleX, canvasHeight - paddleHeight - 10 * scale, paddleWidth, paddleHeight);
 }
 
 function drawScore() {
-    ctx.font = "16px Arial";
+    ctx.font = `${16 * scale}px Arial`;
     ctx.fillStyle = "#ffffff";
-    ctx.fillText("Очки: " + score, 8, 20);
-    ctx.fillText("Уровень: " + level, canvasWidth - 100, 20);
+    ctx.fillText("Очки: " + score, 8 * scale, 20 * scale);
+    ctx.fillText("Уровень: " + level, canvasWidth - 100 * scale, 20 * scale);
 }
 
 function drawPowerUps() {
@@ -84,13 +97,13 @@ function drawPowerUps() {
 
             ctx.fillRect(p.x, p.y, powerUpWidth, powerUpHeight);
             ctx.fillStyle = "#000";
-            ctx.font = "bold 12px Arial";
-            ctx.fillText(p.type[0].toUpperCase(), p.x + 4, p.y + 15);
+            ctx.font = `bold ${12 * scale}px Arial`;
+            ctx.fillText(p.type[0].toUpperCase(), p.x + 4 * scale, p.y + 15 * scale);
 
-            p.y += 2;
+            p.y += 2 * scale;
 
             if (
-                p.y + powerUpHeight >= canvasHeight - paddleHeight - 10 &&
+                p.y + powerUpHeight >= canvasHeight - paddleHeight - 10 * scale &&
                 p.x + powerUpWidth > paddleX &&
                 p.x < paddleX + paddleWidth
             ) {
@@ -134,14 +147,12 @@ function drawBalls() {
 
 function moveBalls() {
     balls.forEach(b => {
-        // Столкновения со стенами
         if (b.x + b.dx > canvasWidth - b.radius || b.x + b.dx < b.radius) b.dx = -b.dx;
         if (b.y + b.dy < b.radius) b.dy = -b.dy;
-        else if (b.y + b.dy > canvasHeight - b.radius - paddleHeight - 10) {
+        else if (b.y + b.dy > canvasHeight - b.radius - paddleHeight - 10 * scale) {
             if (b.x > paddleX && b.x < paddleX + paddleWidth) {
                 b.dy = -b.dy;
             } else if (b.y + b.dy > canvasHeight - b.radius) {
-                // Потеря шара
                 balls = balls.filter(ball => ball !== b);
                 if (balls.length === 0) {
                     isRunning = false;
@@ -152,7 +163,6 @@ function moveBalls() {
             }
         }
 
-        // Столкновения с блоками
         for (let c = 0; c < blockColumnCount; c++) {
             for (let r = 0; r < blockRowCount; r++) {
                 const bl = blocks[c][r];
@@ -184,7 +194,7 @@ function moveBalls() {
                                 level++;
                                 balls.forEach(b => { b.dx *= 1.2; b.dy *= 1.2; });
                                 resetBlocks();
-                                balls = [{ x: canvasWidth / 2, y: canvasHeight - 30, dx: 2, dy: -2, radius: 8 }];
+                                balls = [{ x: canvasWidth / 2, y: canvasHeight - 30, dx: 2 * scale, dy: -2 * scale, radius: 8 * scale }];
                                 score = 0;
                             } else {
                                 alert("Ты прошёл все уровни! 🏆");
@@ -233,15 +243,14 @@ function draw() {
     drawScore();
     moveBalls();
 
-    if (rightPressed && paddleX < canvasWidth - paddleWidth) paddleX += 5;
-    else if (leftPressed && paddleX > 0) paddleX -= 5;
+    if (rightPressed && paddleX < canvasWidth - paddleWidth) paddleX += 5 * scale;
+    else if (leftPressed && paddleX > 0) paddleX -= 5 * scale;
 
     if (isRunning && !isPaused) {
         animationId = requestAnimationFrame(draw);
     }
 }
 
-// UI
 const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
 const restartBtn = document.getElementById("restartBtn");
