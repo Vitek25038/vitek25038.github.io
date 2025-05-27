@@ -1,4 +1,4 @@
-// Arkanoid v1.6 — адаптация под мобильные
+// Arkanoid — версия для ПК без адаптации
 
 let isRunning = false;
 let isPaused = false;
@@ -7,18 +7,11 @@ let animationId;
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// Адаптивный размер канваса
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight * 0.7;
-
 const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 
-// Масштаб от базовой ширины (480px)
-const scale = canvasWidth / 480;
-
-let paddleWidth = 75 * scale;
-const paddleHeight = 10 * scale;
+let paddleWidth = 75;
+const paddleHeight = 10;
 let paddleX = (canvasWidth - paddleWidth) / 2;
 
 let score = 0;
@@ -29,21 +22,23 @@ let rightPressed = false;
 let leftPressed = false;
 
 let balls = [
-    { x: canvasWidth / 2, y: canvasHeight - 30, dx: 2 * scale, dy: -2 * scale, radius: 8 * scale }
+    { x: canvasWidth / 2, y: canvasHeight - 30, dx: 2, dy: -2, radius: 8 }
 ];
 
 let powerUps = [];
-const powerUpWidth = 20 * scale;
-const powerUpHeight = 20 * scale;
+const powerUpWidth = 20;
+const powerUpHeight = 20;
 const powerUpChance = 0.3;
 
 const blockRowCount = 5;
 const blockColumnCount = 7;
-const blockWidth = 55 * scale;
-const blockHeight = 20 * scale;
-const blockPadding = 10 * scale;
-const blockOffsetTop = 30 * scale;
-const blockOffsetLeft = 35 * scale;
+const blockWidth = 55;
+const blockHeight = 20;
+const blockPadding = 10;
+const totalBlockWidth = blockColumnCount * (blockWidth + blockPadding) - blockPadding;
+const blockOffsetLeft = (canvasWidth - totalBlockWidth) / 2;
+const blockOffsetTop = 30;
+
 let blocks = [];
 
 for (let c = 0; c < blockColumnCount; c++) {
@@ -53,16 +48,10 @@ for (let c = 0; c < blockColumnCount; c++) {
     }
 }
 
-canvas.addEventListener("mousemove", (e) => {
+document.addEventListener("mousemove", (e) => {
     const rect = canvas.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     paddleX = mouseX - paddleWidth / 2;
-});
-
-canvas.addEventListener("touchmove", (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const touchX = e.touches[0].clientX - rect.left;
-    paddleX = touchX - paddleWidth / 2;
 });
 
 document.addEventListener("keydown", (e) => {
@@ -77,39 +66,37 @@ document.addEventListener("keyup", (e) => {
 
 function drawPaddle() {
     ctx.fillStyle = '#00ffff';
-    ctx.fillRect(paddleX, canvasHeight - paddleHeight - 10 * scale, paddleWidth, paddleHeight);
+    ctx.fillRect(paddleX, canvasHeight - paddleHeight - 10, paddleWidth, paddleHeight);
 }
 
 function drawScore() {
-    ctx.font = `${16 * scale}px Arial`;
+    ctx.font = "16px Arial";
     ctx.fillStyle = "#ffffff";
-    ctx.fillText("Очки: " + score, 8 * scale, 20 * scale);
-    ctx.fillText("Уровень: " + level, canvasWidth - 100 * scale, 20 * scale);
+    ctx.fillText("Очки: " + score, 8, 20);
+    ctx.fillText("Уровень: " + level, canvasWidth - 100, 20);
 }
 
 function drawPowerUps() {
     for (let i = 0; i < powerUps.length; i++) {
         const p = powerUps[i];
         if (p.active) {
-            if (p.type === "widen") ctx.fillStyle = "#00ff00";
-            else if (p.type === "slow") ctx.fillStyle = "#00bfff";
-            else if (p.type === "multiball") ctx.fillStyle = "#ff3366";
-
+            ctx.fillStyle = p.type === "widen" ? "#00ff00" : p.type === "slow" ? "#00bfff" : "#ff3366";
             ctx.fillRect(p.x, p.y, powerUpWidth, powerUpHeight);
             ctx.fillStyle = "#000";
-            ctx.font = `bold ${12 * scale}px Arial`;
-            ctx.fillText(p.type[0].toUpperCase(), p.x + 4 * scale, p.y + 15 * scale);
+            ctx.font = "bold 12px Arial";
+            ctx.fillText(p.type[0].toUpperCase(), p.x + 4, p.y + 15);
 
-            p.y += 2 * scale;
+            p.y += 2;
 
             if (
-                p.y + powerUpHeight >= canvasHeight - paddleHeight - 10 * scale &&
+                p.y + powerUpHeight >= canvasHeight - paddleHeight - 10 &&
                 p.x + powerUpWidth > paddleX &&
                 p.x < paddleX + paddleWidth
             ) {
                 p.active = false;
                 if (p.type === "widen") {
                     paddleWidth *= 1.5;
+                    paddleWidth = Math.min(paddleWidth, canvasWidth * 0.9);
                     setTimeout(() => { paddleWidth /= 1.5; }, 10000);
                 }
                 if (p.type === "slow") {
@@ -146,69 +133,75 @@ function drawBalls() {
 }
 
 function moveBalls() {
+    let anyBallActive = false;
+    const activeBalls = [];
+
     balls.forEach(b => {
+        let alive = true;
+
         if (b.x + b.dx > canvasWidth - b.radius || b.x + b.dx < b.radius) b.dx = -b.dx;
         if (b.y + b.dy < b.radius) b.dy = -b.dy;
-        else if (b.y + b.dy > canvasHeight - b.radius - paddleHeight - 10 * scale) {
+        else if (b.y + b.dy > canvasHeight - b.radius - paddleHeight - 10) {
             if (b.x > paddleX && b.x < paddleX + paddleWidth) {
                 b.dy = -b.dy;
             } else if (b.y + b.dy > canvasHeight - b.radius) {
-                balls = balls.filter(ball => ball !== b);
-                if (balls.length === 0) {
-                    isRunning = false;
-                    cancelAnimationFrame(animationId);
-                    gameOverScreen.classList.remove("hidden");
-                    gameOverScreen.classList.add("show");
-                }
+                alive = false;
             }
         }
 
         for (let c = 0; c < blockColumnCount; c++) {
             for (let r = 0; r < blockRowCount; r++) {
                 const bl = blocks[c][r];
-                if (bl.status === 1) {
-                    if (
-                        b.x > bl.x &&
-                        b.x < bl.x + blockWidth &&
-                        b.y > bl.y &&
-                        b.y < bl.y + blockHeight
-                    ) {
-                        b.dy = -b.dy;
-                        bl.status = 0;
-
+                if (bl.status === 1 &&
+                    b.x > bl.x &&
+                    b.x < bl.x + blockWidth &&
+                    b.y > bl.y &&
+                    b.y < bl.y + blockHeight) {
+                    b.dy = -b.dy;
+                    bl.status = 0;
+                    if (Math.random() < powerUpChance) {
                         const types = ["widen", "slow", "multiball"];
-                        const type = types[Math.floor(Math.random() * types.length)];
-
-                        if (Math.random() < powerUpChance) {
-                            powerUps.push({
-                                x: bl.x + blockWidth / 2 - powerUpWidth / 2,
-                                y: bl.y,
-                                type: type,
-                                active: true
-                            });
-                        }
-
-                        score++;
-                        if (score === blockRowCount * blockColumnCount) {
-                            if (level < maxLevel) {
-                                level++;
-                                balls.forEach(b => { b.dx *= 1.2; b.dy *= 1.2; });
-                                resetBlocks();
-                                balls = [{ x: canvasWidth / 2, y: canvasHeight - 30, dx: 2 * scale, dy: -2 * scale, radius: 8 * scale }];
-                                score = 0;
-                            } else {
-                                alert("Ты прошёл все уровни! 🏆");
-                                document.location.reload();
-                            }
+                        powerUps.push({
+                            x: bl.x + blockWidth / 2 - powerUpWidth / 2,
+                            y: bl.y,
+                            type: types[Math.floor(Math.random() * types.length)],
+                            active: true
+                        });
+                    }
+                    score++;
+                    if (score === blockRowCount * blockColumnCount) {
+                        if (level < maxLevel) {
+                            level++;
+                            balls.forEach(b => { b.dx *= 1.2; b.dy *= 1.2; });
+                            resetBlocks();
+                            balls = [{ x: canvasWidth / 2, y: canvasHeight - 30, dx: 2, dy: -2, radius: 8 }];
+                            score = 0;
+                            return;
+                        } else {
+                            alert("Ты прошёл все уровни! 🏆");
+                            document.location.reload();
                         }
                     }
                 }
             }
         }
 
-        b.x += b.dx;
-        b.y += b.dy;
+        if (alive) {
+            b.x += b.dx;
+            b.y += b.dy;
+            activeBalls.push(b);
+            anyBallActive = true;
+        }
     });
+
+    balls = activeBalls;
+
+    if (!anyBallActive) {
+        isRunning = false;
+        cancelAnimationFrame(animationId);
+        gameOverScreen.classList.remove("hidden");
+        gameOverScreen.classList.add("show");
+    }
 }
 
 function drawBlocks() {
@@ -243,8 +236,8 @@ function draw() {
     drawScore();
     moveBalls();
 
-    if (rightPressed && paddleX < canvasWidth - paddleWidth) paddleX += 5 * scale;
-    else if (leftPressed && paddleX > 0) paddleX -= 5 * scale;
+    if (rightPressed && paddleX < canvasWidth - paddleWidth) paddleX += 5;
+    else if (leftPressed && paddleX > 0) paddleX -= 5;
 
     if (isRunning && !isPaused) {
         animationId = requestAnimationFrame(draw);
