@@ -1,0 +1,122 @@
+/* ===== Базовая разметка и фон ===== */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #1a1a1a, #2e2e2e);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+}
+
+/* ===== Канвас ===== */
+canvas {
+    border: 2px solid #00ffff;
+    background-color: #000;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+}
+
+/* ===== UI-кнопки ===== */
+#ui {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#ui button {
+    margin: 5px;
+    padding: 10px 25px;
+    font-size: 16px;
+    background-color: #111;
+    color: #fff;
+    border: 2px solid #00ffff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#ui button:hover {
+    background-color: #00ffff;
+    color: #000;
+}
+
+/* ===== Game Over ===== */
+#gameOverScreen {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #111;
+    color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    display: none;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+    border: 1px solid #00ffff;
+}
+
+#gameOverScreen h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #00ffff;
+}
+
+#gameOverScreen button {
+    padding: 10px 25px;
+    font-size: 16px;
+    background-color: #111;
+    color: #fff;
+    border: 2px solid #00ffff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#gameOverScreen button:hover {
+    background-color: #00ffff;
+    color: #000;
+}
+
+/* ===== Анимация появления окна ===== */
+#gameOverScreen.show {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translate(-50%, -50%);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translate(-50%, -50%);
+    }
+}
+
+/* ===== Технический класс скрытия ===== */
+.hidden {
+    display: none;
+}
+
+/* Плавная анимация появления Game Over */
+#gameOverScreen.show {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translate(-50%, -50%);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translate(-50%, -50%);
+    }
+}
