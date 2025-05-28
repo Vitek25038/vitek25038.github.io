@@ -9,7 +9,12 @@
 </head>
 
 <body>
+    <div id="leftEffects" class="effects"></div>
+
     <canvas id="gameCanvas" width="480" height="320"></canvas>
+
+
+    <div id="rightEffects" class="effects"></div>
 
     <div id="ui">
         <button id="startBtn">Начать игру</button>
@@ -22,6 +27,27 @@
     </div>
 
     <script src="script.js"></script>
+    <div class="side-panel left-panel">
+        <h3>💎 Баффы</h3>
+        <ul>
+            <li><span class="buff buff-W">W</span> Удлинение платформы</li>
+            <li><span class="buff buff-M">M</span> Мультишар</li>
+            <li><span class="buff buff-F">F</span> Заморозка блоков</li>
+            <li><span class="buff buff-L">L</span> +1 жизнь</li>
+        </ul>
+    </div>
+
+    <div class="side-panel right-panel">
+        <h3>💀 Дебаффы</h3>
+        <ul>
+            <li><span class="debuff debuff-S">S</span> Сужение платформы</li>
+            <li><span class="debuff debuff-B">B</span> Ускорение шарика</li>
+            <li><span class="debuff debuff-G">G</span> Прозрачная платформа</li>
+            <li><span class="debuff debuff-Z">Z</span> Инверсия управления</li>
+        </ul>
+    </div>
+
+
 </body>
 
 </html>
