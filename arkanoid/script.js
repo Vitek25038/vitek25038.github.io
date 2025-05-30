@@ -51,7 +51,7 @@ const powerUpChance = 0.3;
 
 const blockRowCount = 5;
 const blockColumnCount = 7;
-const blockWidth = 55;
+const blockWidth = 100;
 const blockHeight = 20;
 const blockPadding = 10;
 const totalBlockWidth = blockColumnCount * (blockWidth + blockPadding) - blockPadding;
@@ -110,7 +110,7 @@ function drawPaddle() {
 function drawScore() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#ffffff";
-    ctx.fillText("Очки: " + score, 8, 20);
+    ctx.fillText("Очки: " + score, 23, 20);
     ctx.fillText("Уровень: " + level, canvasWidth - 100, 20);
 }
 
@@ -118,6 +118,7 @@ function drawPowerUps() {
     powerUps.forEach(p => {
         if (!p.active) return;
 
+        // Отрисовка бонуса
         ctx.fillStyle = p.color;
         ctx.fillRect(p.x, p.y, powerUpWidth, powerUpHeight);
 
@@ -129,8 +130,17 @@ function drawPowerUps() {
         // Падение
         p.y += 2;
 
-        // Проверка ловли
+        // Если улетел за экран — отключаем
+        if (p.y > canvasHeight) {
+            p.active = false;
+        }
+    });
+}
+
+function checkPowerUpCatch() {
+    powerUps.forEach(p => {
         if (
+            p.active &&
             p.y + powerUpHeight >= canvasHeight - paddleHeight - 10 &&
             p.x + powerUpWidth > paddleX &&
             p.x < paddleX + paddleWidth
@@ -138,13 +148,9 @@ function drawPowerUps() {
             applyPowerUp(p);
             p.active = false;
         }
-
-        // Если упал за экран
-        if (p.y > canvasHeight) {
-            p.active = false;
-        }
     });
 }
+
 
 
 
@@ -244,79 +250,80 @@ function movePowerUps() {
     powerUps = remaining;
 }
 
+function applyPowerUp(p) {
+    if (p.type === "widen") {
+        paddleWidth += 30;
+        setTimeout(() => paddleWidth -= 30, 10000);
+    }
+
+    else if (p.type === "multiball") {
+        const newBalls = balls.map(b => ({
+            x: b.x,
+            y: b.y,
+            dx: -b.dx,
+            dy: b.dy,
+            radius: b.radius
+        }));
+        balls.push(...newBalls);
+    }
+
+    else if (p.type === "slow") {
+        balls.forEach(b => {
+            b.dx *= 0.7;
+            b.dy *= 0.7;
+        });
+        setTimeout(() => {
+            balls.forEach(b => {
+                b.dx /= 0.7;
+                b.dy /= 0.7;
+            });
+        }, 10000);
+    }
+
+    else if (p.type === "shrink") {
+        paddleWidth = Math.max(40, paddleWidth - 30);
+        setTimeout(() => paddleWidth += 30, 10000);
+    }
+
+    else if (p.type === "fast") {
+        balls.forEach(b => {
+            b.dx *= 1.5;
+            b.dy *= 1.5;
+        });
+        setTimeout(() => {
+            balls.forEach(b => {
+                b.dx /= 1.5;
+                b.dy /= 1.5;
+            });
+        }, 10000);
+    }
+
+    else if (p.type === "reverse") {
+        const origLeft = leftPressed;
+        const origRight = rightPressed;
+
+        document.addEventListener("keydown", reverseHandler);
+        document.addEventListener("keyup", reverseHandler);
+
+        function reverseHandler(e) {
+            if (e.key === "ArrowRight") leftPressed = e.type === "keydown";
+            if (e.key === "ArrowLeft") rightPressed = e.type === "keydown";
+        }
+
+        setTimeout(() => {
+            document.removeEventListener("keydown", reverseHandler);
+            document.removeEventListener("keyup", reverseHandler);
+            leftPressed = origLeft;
+            rightPressed = origRight;
+        }, 10000);
+    }
+}
 
 function draw() {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     drawBlocks();
     drawPowerUps();
-    function applyPowerUp(p) {
-        if (p.type === "widen") {
-            paddleWidth += 30;
-            setTimeout(() => paddleWidth -= 30, 10000);
-        }
-
-        else if (p.type === "multiball") {
-            const newBalls = balls.map(b => ({
-                x: b.x,
-                y: b.y,
-                dx: -b.dx,
-                dy: b.dy,
-                radius: b.radius
-            }));
-            balls.push(...newBalls);
-        }
-
-        else if (p.type === "slow") {
-            balls.forEach(b => {
-                b.dx *= 0.7;
-                b.dy *= 0.7;
-            });
-            setTimeout(() => {
-                balls.forEach(b => {
-                    b.dx /= 0.7;
-                    b.dy /= 0.7;
-                });
-            }, 10000);
-        }
-
-        else if (p.type === "shrink") {
-            paddleWidth = Math.max(40, paddleWidth - 30);
-            setTimeout(() => paddleWidth += 30, 10000);
-        }
-
-        else if (p.type === "fast") {
-            balls.forEach(b => {
-                b.dx *= 1.5;
-                b.dy *= 1.5;
-            });
-            setTimeout(() => {
-                balls.forEach(b => {
-                    b.dx /= 1.5;
-                    b.dy /= 1.5;
-                });
-            }, 10000);
-        }
-
-        else if (p.type === "reverse") {
-            const origLeft = leftPressed;
-            const origRight = rightPressed;
-
-            document.addEventListener("keydown", reverseHandler);
-            document.addEventListener("keyup", reverseHandler);
-
-            function reverseHandler(e) {
-                if (e.key === "ArrowRight") leftPressed = e.type === "keydown";
-                if (e.key === "ArrowLeft") rightPressed = e.type === "keydown";
-            }
-
-            setTimeout(() => {
-                document.removeEventListener("keydown", reverseHandler);
-                document.removeEventListener("keyup", reverseHandler);
-                leftPressed = origLeft;
-                rightPressed = origRight;
-            }, 10000);
-        }
-    }
+    checkPowerUpCatch();
 
     drawBalls();
     drawPaddle();
